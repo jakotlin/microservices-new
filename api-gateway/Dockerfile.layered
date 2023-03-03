@@ -1,11 +1,10 @@
-FROM eclipse-temurin:17.0.4.1_1-jre as builder
-#FROM alpine:3.17 as builder
+FROM eclipse-temurin:17.0.6_10-jre as builder
 WORKDIR extracted
-ADD target/*.jar app.jar
+#ADD target/*.jar app.jar
+ADD *.jar app.jar
 RUN java -Djarmode=layertools -jar app.jar extract
 
-FROM eclipse-temurin:17.0.4.1_1-jre
-#FROM alpine:3.17
+FROM eclipse-temurin:17.0.6_10-jre
 WORKDIR application
 COPY --from=builder extracted/dependencies/ ./
 COPY --from=builder extracted/spring-boot-loader/ ./
